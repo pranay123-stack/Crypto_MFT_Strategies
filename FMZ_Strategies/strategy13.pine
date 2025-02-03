@@ -1,0 +1,24 @@
+/*backtest
+start: 2022-08-17 08:00:00
+end: 2024-08-29 08:00:00
+period: 1d
+basePeriod: 1d
+exchanges: [{"eid":"Binance","currency":"BTC_USDT"}]
+*/
+
+strategy("supertrend", overlay=true, default_qty_type = strategy.percent_of_equity, default_qty_value = 50)
+
+[supertrend, direction] = ta.supertrend(input(5, "factor"), input.int(10, "atrPeriod"))
+
+
+
+if direction < 0
+    if supertrend > supertrend[2]
+        strategy.entry("entry long", strategy.long)
+    else if strategy.position_size < 0
+        strategy.close_all()
+else if direction > 0
+    if supertrend < supertrend[3]
+        strategy.entry("entry short", strategy.short)
+    else if strategy.position_size > 0
+        strategy.close_all()

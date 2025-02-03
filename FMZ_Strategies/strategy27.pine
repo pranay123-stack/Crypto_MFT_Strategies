@@ -1,0 +1,52 @@
+/*backtest
+start: 2024-07-22 00:00:00
+end: 2024-07-29 00:00:00
+period: 1m
+basePeriod: 1m
+exchanges: [{"eid":"Futures_Binance","currency":"BTC_USDT"}]
+*/
+
+
+// Bollinger Bands parameters
+length = input(20, title="Bollinger Bands Length")
+src = input(close, title="Source")
+mult = input(2.0, title="Bollinger Bands Multiplier")
+// Bollinger Bands calculation
+basis = ta.sma(src, length)
+dev = mult * ta.stdev(src, length)
+upper = basis + dev
+lower = basis - dev
+
+
+// MACD parameters
+macdFastLength = input(12, title="MACD Fast Length")
+macdSlowLength = input(26, title="MACD Slow Length")
+macdSignalSmoothing = input(9, title="MACD Signal Smoothing")
+// MACD calculation
+[macdLine, signalLine, _] = ta.macd(src, macdFastLength, macdSlowLength, macdSignalSmoothing)
+macdHist = macdLine - signalLine
+
+
+
+
+// RSI parameters
+rsiLength = input(14, title="RSI Length")
+rsiOverbought = input(70, title="RSI Overbought Level")
+rsiOversold = input(30, title="RSI Oversold Level")
+// RSI calculation
+rsi = ta.rsi(src, rsiLength)
+
+
+
+
+// Buy/Sell signals based on Bollinger Bands, MACD, and RSI
+buySignal = (src < lower) and (macdLine > signalLine) and (rsi < rsiOversold)
+sellSignal = (src > upper) and (macdLine < signalLine) and (rsi > rsiOverbought)
+
+
+
+// Strategy logic
+if (buySignal)
+    strategy.entry("Buy", strategy.long)
+if (sellSignal)
+    strategy.entry("Sell", strategy.short)
