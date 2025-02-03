@@ -1,0 +1,79 @@
+
+To illustrate the triangular arbitrage process practically with an example, let's assume we have three cryptocurrency pairs in the market:
+
+BTC/USDT: This represents the price of Bitcoin (BTC) in USDT (Tether).
+ETH/BTC: This represents the price of Ethereum (ETH) in Bitcoin (BTC).
+ETH/USDT: This represents the price of Ethereum (ETH) in USDT.
+For the sake of this example, let's assume the following market prices:
+
+BTC/USDT: 50,000 USDT (1 Bitcoin = 50,000 USDT)
+ETH/BTC: 0.04 BTC (1 Ethereum = 0.04 Bitcoin)
+ETH/USDT: 2,000 USDT (1 Ethereum = 2,000 USDT)
+With these prices, we'll look into two possible triangular arbitrage opportunities: BUY_BUY_SELL and BUY_SELL_SELL, using an investment amount of 100,000 USDT.
+
+BUY_BUY_SELL Example:
+In this strategy, you:
+
+Buy BTC with USDT: Spend 100,000 USDT to buy BTC. Given the BTC/USDT price of 50,000 USDT, you'll get 2 BTC (100,000 USDT / 50,000 USDT per BTC).
+
+Buy ETH with BTC: Then, use the 2 BTC to buy ETH. Given the ETH/BTC price of 0.04, you'll get 50 ETH (2 BTC / 0.04 BTC per ETH).
+
+Sell ETH for USDT: Finally, sell the 50 ETH for USDT. Given the ETH/USDT price of 2,000 USDT, you'll get 100,000 USDT (50 ETH * 2,000 USDT per ETH).
+
+In this example, you end up with the same amount you started with, 100,000 USDT, meaning there's no arbitrage opportunity because you don't end up with more USDT than you started with.
+
+BUY_SELL_SELL Example:
+For this strategy, you:
+
+Buy ETH with USDT: Spend 100,000 USDT to buy ETH. Given the ETH/USDT price of 2,000 USDT, you'll get 50 ETH (100,000 USDT / 2,000 USDT per ETH).
+
+Sell ETH for BTC: Sell the 50 ETH for BTC. Given the ETH/BTC price of 0.04, you'll get 2 BTC (50 ETH * 0.04 BTC per ETH).
+
+Sell BTC for USDT: Finally, sell the 2 BTC for USDT. Given the BTC/USDT price of 50,000 USDT, you'll get 100,000 USDT (2 BTC * 50,000 USDT per BTC).
+
+Similar to the BUY_BUY_SELL example, you end up with 100,000 USDT, the same amount you started with, indicating no arbitrage opportunity in this case either.
+
+
+
+
+
+
+
+
+To understand how different cryptocurrency combinations are generated for the purpose of exploring triangular arbitrage opportunities, let's go through the process step by step using a simplified example.
+
+Suppose we have a list of available market symbols on an exchange:
+
+BTC/USDT
+ETH/BTC
+ETH/USDT
+XRP/BTC
+XRP/USDT
+We want to find all possible triangular arbitrage combinations where we start and end with USDT. Here's how the get_crypto_combinations function works to achieve this:
+
+Identify the Base Currency: In this case, our base currency is USDT. We are interested in trading paths that start and end with USDT.
+
+Loop Through Market Symbols: The function iterates through each market symbol (e.g., BTC/USDT) and checks if the second part of the symbol (after the '/') is USDT. This identifies pairs where USDT is used directly.
+
+For BTC/USDT: sym1_token1 is BTC, and sym1_token2 is USDT. Since sym1_token2 is USDT, this pair is considered for further processing.
+Find Matching Pairs: For each pair found in step 2 (e.g., BTC/USDT), the function looks for another pair where the first currency matches the non-USDT currency of the initial pair (BTC in this case).
+
+For BTC/USDT, it finds ETH/BTC and XRP/BTC. These pairs indicate possible middle steps in the arbitrage path, where BTC is used to buy ETH or XRP.
+Complete the Triangle: Finally, for each middle step found in step 3 (ETH/BTC and XRP/BTC), the function looks for a pair that allows trading back to USDT, completing the arbitrage triangle.
+
+For ETH/BTC as the middle step, it finds ETH/USDT, completing a triangle: BTC/USDT → ETH/BTC → ETH/USDT.
+For XRP/BTC as the middle step, it finds XRP/USDT, completing another triangle: BTC/USDT → XRP/BTC → XRP/USDT.
+Example Combinations:
+Given the market symbols above, the function would identify the following triangular arbitrage opportunities:
+
+BTC/USDT → ETH/BTC → ETH/USDT:
+
+You start with USDT, buy BTC with it, then use BTC to buy ETH, and finally sell ETH for USDT.
+BTC/USDT → XRP/BTC → XRP/USDT:
+
+You start with USDT, buy BTC with it, then use BTC to buy XRP, and finally sell XRP for USDT.
+Each of these combinations represents a potential triangular arbitrage path where you start and end with USDT, potentially capitalizing on price discrepancies between the pairs.
+
+Important Notes:
+The function does not guarantee profitable arbitrage opportunities; it merely identifies possible trading paths. Actual profitability must be calculated considering current market prices, fees, and potential slippage.
+Real-world implementations would need to handle exceptions, ensure sufficient liquidity for each trade, and account for trading fees and slippage.

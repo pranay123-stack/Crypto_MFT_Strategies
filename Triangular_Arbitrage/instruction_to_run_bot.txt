@@ -1,0 +1,5 @@
+install requirements.txt
+
+
+run python kraken.py
+

@@ -1,0 +1,10 @@
+Triangular arbitrage is a technique that tries to exploit the price discrepancy across three different assets at the same time.
+
+For example, we can exchange BTC for USDT, BTC for ETH and ETH back to USDT. 
+If the net worth in doing these three trades simultaneously is profitable then the 3 trades are executed simultaneously.
+
+Arbitrage takes advantage of the difference in the asset prices in the market. Arbitrage has been traditionally done in the forex market for many years but given the volatility in the crypto market, it can applied to the crypto market as well. Opportunities for arbitrage can exist within the same exchange or across exchanges.
+
+Triangular arbitrage is a technique that tries to exploit the price discrepancy across three different assets at the same time.
+For example, we can exchange BTC for USDT, BTC for ETH and ETH back to USDT. If the net worth in doing these three trades simultaneously is profitable then the 3 trades are executed simultaneously.
+
